@@ -7,7 +7,7 @@
 
 1. All of these programs will run on a Macintosh computer. If you have a Mac, you can do this at home!
 
-1. Kure is a big fancy cluster that lots of people on campus use. As a result, things on Kure are a little more complicated than they would be on your personal computer in exchange for “playing well with others”, and speed, RAM and disk space.
+1. Kure is a big fancy cluster that lots of people on campus use. As a result, things on Kure are a little more complicated than they would be on your personal computer in exchange for "playing well with others", and speed, RAM and disk space.
 
 1. This is the official documentation on how to do things in kure: http://help.unc.edu/help/getting-started-on-kure/
 
@@ -18,9 +18,9 @@ When you log into Kure, it puts you in your home directory (in the figure below,
 
 ![image of directory structure](MagnusonKureDirectories.png)
 
-Because my “onyen” username is “starmer”, my home directory is `/nas02/home/s/t/starmer`
+Because my "onyen" username is "starmer", my home directory is `/nas02/home/s/t/starmer`
 
-Your home directory will also be related to your “onyen” and will be similar to mine. To find out what yours is, type these two commands:
+Your home directory will also be related to your "onyen" and will be similar to mine. To find out what yours is, type these two commands:
 
     cd
     pwd
@@ -40,11 +40,11 @@ or
     cd /proj/magnuslb/HTSF
     ls
 
-There is a “users” directory that folks affiliated with the Magnuson lab can use. This directory gives you room to store large files. You don’t have much space in your “home” directory, so the “users” directory is where you do your work.
+There is a "users" directory that folks affiliated with the Magnuson lab can use. This directory gives you room to store large files. You don’t have much space in your "home" directory, so the "users" directory is where you do your work.
 
 `/proj/magnuslb/users`
 
-I’ve already added a directory for myself in the “users” directory:
+I’ve already added a directory for myself in the "users" directory:
 
 `/proj/magnuslb/users/starmer`
 
@@ -77,7 +77,7 @@ Now change directories so that you’re in the new directory:
 
     cd EXP_NAME
 
-**STEP 2: Figure out where your actual sequence reads are.** The high-throughput sequencing facility puts the reads in a directory called “HTSF” (which is short for “high-throughput sequencing facility”). However, they put each run worth of data into a subdirectory which starts with a date, like `141203` or `140124`, where the first two digits are for the year, the second two are for the month, and the last two digits are for the day. You can figure out which directory is yours with one of the following commands.
+**STEP 2: Figure out where your actual sequence reads are.** The high-throughput sequencing facility puts the reads in a directory called "HTSF" (which is short for "high-throughput sequencing facility"). However, they put each run worth of data into a subdirectory which starts with a date, like `141203` or `140124`, where the first two digits are for the year, the second two are for the month, and the last two digits are for the day. You can figure out which directory is yours with one of the following commands.
 
     ls /proj/magnuslb/HTSF
 
@@ -95,7 +95,7 @@ or
 
     ls ../../../HTSF/HTSF_DATA
 
-You should see a lot of filenames that end in “fastq.gz”. Figure out which ones are yours. For the rest of the tutorial, I’ll say one file is called `rna_seq_wt.fastq.gz` and one file is called `rna_seq_ko.fastq.gz.`
+You should see a lot of filenames that end in "fastq.gz". Figure out which ones are yours. For the rest of the tutorial, I’ll say one file is called `rna_seq_wt.fastq.gz` and one file is called `rna_seq_ko.fastq.gz.`
 
 
 **STEP 3: Make a link (aka, alias) to your fastq.gz files.** This will keep you from having to type in a path to the file when you run the analysis commands. For the sake of the tutorial, assume you have one RNA-seq file from WT and one RNA-seq file from a knock-out mutant. The following two commands will create links to the original files in your new directory: (Note: these commands assume you are here: `/proj/magnuslb/users/YOUR_ONYEN/EXP_NAME`):
@@ -106,7 +106,7 @@ You should see a lot of filenames that end in “fastq.gz”. Figure out which o
 
 Note the `.` in those commands. It's important. Everything before it means "make a link to this file", and the `.` says, "make that link right here!".
 
-**STEP 4: Make directories to hold the output of various analyses for each file.** You’re going to run “tophat” and you might run “fastqc”, and the output from these programs needs to go into a directory (one per file of reads you want to align).
+**STEP 4: Make directories to hold the output of various analyses for each file.** You’re going to run "tophat" and you might run "fastqc", and the output from these programs needs to go into a directory (one per file of reads you want to align).
 Here are the commands to make directories for the WT and KO file samples: (Note these commands assume you are here: `/proj/magnuslb/users/YOUR_ONYEN/EXP_NAME`):
 
     mkdir rna_seq_wt_results
@@ -125,11 +125,11 @@ and
 
 In these commands, `zmore` allows you to look inside a text file that has been compressed with `gzip`. If the file is not compressed, you can just use `more`. Both `zmore` and `more` show you data one page at a time. `rna_seq_wt.fastq.gz` could have close to a billion lines in it and we don't (and can't) look at them all. We use `zmore` and `more` to look at the first few pages. After the first page of alignments is shown, you can hit the spacebar to see the second page of alignments. Hit the spacebar again and you'll see the third page of alignments, etc.
  
-If you see “N” at the start or ends of alignments, you can trim them off with trimmomatic.
+If you see "N" at the start or ends of alignments, you can trim them off with trimmomatic.
 
 Note: before we get started with the actual analysis (running programs to determine the quality of the reads, aligning, counting and making UCSC tracks, etc.), let me say that there are three ways to get work done on Kure. Each way has different pros and cons, and, ultimately, it makes sense to know them all. All three methods are covered in this tutorial, but not all at once (I don't give you three ways to get each step done).
 
-**STEP 6: (OPTIONAL - But read this section anyway.) Run FASTQC to asses the overall quality of the run.** Why optional? The information this generates is really only useful to help figure out what happened when things went wrong in a super bad away. If things went “sort of wrong” (i.e. you didn’t get a ton of reads, or a lot of your reads map to repetitive sequences), you’re still going to align what you got reads and try to squeeze everything you can out of it. Rarely has information generated by FASTQC caused me to change course or take a different plan.
+**STEP 6: (OPTIONAL - But read this section anyway.) Run FASTQC to asses the overall quality of the run.** Why optional? The information this generates is really only useful to help figure out what happened when things went wrong in a super bad away. If things went "sort of wrong" (i.e. you didn't get a ton of reads, or a lot of your reads map to repetitive sequences), you're still going to align what you got reads and try to squeeze everything you can out of it. Rarely has information generated by FASTQC caused me to change course or take a different plan.
 
 First load the module (you only have to do this once after you login):
 
@@ -147,9 +147,9 @@ What do all those commands mean?
 
 `-J fastqc_wt` 	This specifies the name of the "job". The bsub command submits jobs to be done. This job is going to be called `fastqc_wt`, and when we look at our jobs (and whether they are running, or stuck or completed) with the `bjobs` command, it will be listed under `fastqc_wt`.
 
-`-o fastqc_wt_stdout.txt`	This is the “standard output” file for the program we want to run (in this case, `fastqc`). Since we are submitting `fastqc` as a job to a compute node, `fastqc `can’t write messages directly to your terminal. Instead some of those messages will go in this file. This file will rarely be of use, but is here for completeness sake.
+`-o fastqc_wt_stdout.txt`	This is the "standard output" file for the program we want to run (in this case, `fastqc`). Since we are submitting `fastqc` as a job to a compute node, `fastqc `can’t write messages directly to your terminal. Instead some of those messages will go in this file. This file will rarely be of use, but is here for completeness sake.
 
-`-e fastqc_wt_stderr.txt`	This is the “standard error” file for the program we want to run (in this case, `fastqc`). Since we are submitting `fastqc` as a job to a compute node, `fastqc` can’t write error messages directly to your terminal. Instead, `fastqc`’s error messages will go in this file. This file can be extremely useful for debugging. If things fail, you can view it’s contents with the following command: `more fastqc_wt_stderr.txt`
+`-e fastqc_wt_stderr.txt`	This is the "standard error" file for the program we want to run (in this case, `fastqc`). Since we are submitting `fastqc` as a job to a compute node, `fastqc` can’t write error messages directly to your terminal. Instead, `fastqc`’s error messages will go in this file. This file can be extremely useful for debugging. If things fail, you can view it’s contents with the following command: `more fastqc_wt_stderr.txt`
 
 `fastqc`	This is the program we actually want to run on a compute node.
 
@@ -202,7 +202,7 @@ The following command will tell you that you ran `fastqc` and that you should ch
 
     more fastqc_wt_stdout.txt
 
-If `fastqc` ran successfully, you can look at it's output. This is stored in rna_seq_ko_results. We can look at the file names with this command:
+If `fastqc` ran successfully, you can look at it's output. This is stored in `rna_seq_ko_results`. We can look at the file names with this command:
 
     ls rna_seq_wt_results/
 
@@ -231,7 +231,7 @@ The first command `unzip rna_seq_wt_results/rna_seq_wt_fastqc.zip` uncompresses 
 
 Remember, regardless of what `fastqc` tells you about your data, you're probably going to want to press on with the analysis. Don't worry too much about whether something passed or failed a test until you look at your results.
 
-**STEP 7: (OPTIONAL) Trim reads with trimmomatic.** This program will do a lot of things, but I only recommend it if you want to remove leading or trailing “N” that are in the reads. Additionally, it will remove the Illumina adapter sequences (which are usually already removed) and low quality reads (which can be filtered after alignment.)
+**STEP 7: (OPTIONAL) Trim reads with trimmomatic.** This program will do a lot of things, but I only recommend it if you want to remove leading or trailing "N" that are in the reads. Additionally, it will remove the Illumina adapter sequences (which are usually already removed) and low quality reads (which can be filtered after alignment.)
 
 First load the module (you only have to do this once after you login)
 
@@ -261,7 +261,7 @@ This command does a lot… Just like with `fastqc`, `-n 1` tells Kure that we wa
 
 `MINLEN:30`	This tells` trimmomatic` that a read must be at least 30 bp in length (if it trims so many Ns that the read gets shorter than 30bp, it tosses the whole read.)
 
-`LEADING:3 TRAILING:3`	This tells `trimmomatic` to trim leading and trailing “N”s.
+`LEADING:3 TRAILING:3`	This tells `trimmomatic` to trim leading and trailing "N"s.
 
 If you want to run that command on the "ko" data, you can replace "wt" with "ko".
 
@@ -283,7 +283,7 @@ Load the module:
 
     module load tophat
 
-Now do the alignment (type this without hitting return until the end). This next command works with MM9 (to use MM10, just change the 9 to 10). It was also written assuming you ‘trimmed’ your file. If you didn’t, change `rna_seq_wt_trim.fastq.gz` to `rna_seq_wt.fastq.gz` :
+Now do the alignment (type this without hitting return until the end). This next command works with MM9 (to use MM10, just change the 9 to 10). It was also written assuming you 'trimmed' your file. If you didn’t, change `rna_seq_wt_trim.fastq.gz` to `rna_seq_wt.fastq.gz` :
 
     bsub -n 8 -R "span[hosts=1]" -J tophat_wt -o tophat_wt_stdout.txt -e tophhat_wt_stderr.txt tophat2 --library-type fr-unstranded -o rna_seq_wt_results -p 8 --no-novel-juncs -G /proj/seq/data/MM9_UCSC/Annotation/Genes/genes.gtf /proj/seq/data/MM9_UCSC/Sequence/Bowtie2Index/genome rna_seq_wt_trim.fastq.gz
 
@@ -311,7 +311,7 @@ These are options we are sending to `tophat2`:
 
 `--no-novel-juncs` 	Tells `tophat2` to only look at splice junctions specified in a genome annotation file.
 
-`-G /proj/seq/data/MM9_UCSC/Annotation/Genes/genes.gtf`	Tells `tophat2` where the genome annotation file is. In this case, we are specifying the MM9 genome annotation. Kure has annotations for MM10, HG19, etc. This file is used for, among other things, by the `--no-novel-juncs` option. It is also used to build a “transcriptome” from the genome. `Tophat2` will first try to align reads to this transcriptome and then it will align all remaining genes to the genome.
+`-G /proj/seq/data/MM9_UCSC/Annotation/Genes/genes.gtf`	Tells `tophat2` where the genome annotation file is. In this case, we are specifying the MM9 genome annotation. Kure has annotations for MM10, HG19, etc. This file is used for, among other things, by the `--no-novel-juncs` option. It is also used to build a "transcriptome" from the genome. `Tophat2` will first try to align reads to this transcriptome and then it will align all remaining genes to the genome.
 
 `/proj/seq/data/MM9_UCSC/Sequence/Bowtie2Index/genome`	Tells `tophat2` where the genome is. In this case we’re going to align to the MM9 genome. Kure has annotations for MM10, HG19, etc.
 
@@ -475,7 +475,7 @@ First, you have to make a file with the commands you want to run. There are lots
 
 You’ll notice some similarities and differences in this file from when we ran these commands interactively. For the most part, things are the same, except now we have `BAMFILE=$1`, which means "make a variable called `BAMFILE` and set it to the first thing I see." We’ve also added `TRACK_NAME=$2`, which means "make a variable called `TRACK_NAME` and set it to the second thing I see." Lastly, we’ve added `OUTFILE=$3`, which means "make a variable called `OUTFILE` and set it to the third thing I see." Later in the commands we use these variables instead of typing out "my track" and "wt.bedgraph".
 
-What does “set it to the first (second or third) thing I see” mean? Hang in there, you’ll understand in just a second...
+What does "set it to the first (second or third) thing I see" mean? Hang in there, you’ll understand in just a second...
 
 Now, assume we saved that file as "makeBedgraph.sh". To run it, use this command:
 
