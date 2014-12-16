@@ -13,8 +13,8 @@
 
 #Preliminary house keeping things to take care of the first time you login.
 
- **Logging in and Creating a Directory For Yourself in Our Lab’s Space:**
-When you log into Kure, it puts you in your home directory (in the figure below, I’ve indicated the location of your home directory relative to other important directories):
+ **Logging in and Creating a Directory For Yourself in Our Lab's Space:**
+When you log into Kure, it puts you in your home directory (in the figure below, I've indicated the location of your home directory relative to other important directories):
 
 ![image of directory structure](MagnusonKureDirectories.png)
 
@@ -25,7 +25,7 @@ Your home directory will also be related to your "onyen" and will be similar to 
     cd
     pwd
 
-The first command, `cd`, just makes sure that your current working directory is your home directory, and the second one, `pwd`, prints out the path to your current working directory. Don’t worry too much about the details of what I just wrote at this time, just type `cd` (followed by return) and then `pwd` (followed by return).
+The first command, `cd`, just makes sure that your current working directory is your home directory, and the second one, `pwd`, prints out the path to your current working directory. Don't worry too much about the details of what I just wrote at this time, just type `cd` (followed by return) and then `pwd` (followed by return).
 
 The RNA-seq data for the Magnuson lab is stored here:
 
@@ -40,15 +40,15 @@ or
     cd /proj/magnuslb/HTSF
     ls
 
-There is a "users" directory that folks affiliated with the Magnuson lab can use. This directory gives you room to store large files. You don’t have much space in your "home" directory, so the "users" directory is where you do your work.
+There is a "users" directory that folks affiliated with the Magnuson lab can use. This directory gives you room to store large files. You don't have much space in your "home" directory, so the "users" directory is where you do your work.
 
 `/proj/magnuslb/users`
 
-I’ve already added a directory for myself in the "users" directory:
+I've already added a directory for myself in the "users" directory:
 
 `/proj/magnuslb/users/starmer`
 
-You should make one for yourself, too.  There are lots of ways to make a directory for yourself. Here are two of them (replace YOUR_ONYEN with your actual onyen username):
+You should make one for yourself, too.  There are lots of ways to make a directory for yourself. Here are two of them (replace `YOUR_ONYEN` with your actual onyen username):
 
     mkdir /proj/magnuslb/users/YOUR_ONYEN
 
@@ -73,7 +73,7 @@ Do this from within `/proj/magnuslb/users/YOUR_ONYEN/` (Replace `EXP_NAME` with 
 
     mkdir EXP_NAME
 
-Now change directories so that you’re in the new directory:
+Now change directories so that you're in the new directory:
 
     cd EXP_NAME
 
@@ -85,9 +85,9 @@ or
 
     ls ../../../HTSF
 
-The second command assumes you’re in the `EXP_NAME` directory that you just made.
+The second command assumes you're in the `EXP_NAME` directory that you just made.
 
-To make things easier to describe, we’ll call the directory in HTSF that has your data `HTSF_DATA`. Now, sometimes all of the data `HTSF_DATA` is yours, but sometimes it’s not. You can see the files in it (to see which one’s are yours) with one of the following commands:
+To make things easier to describe, we'll call the directory in HTSF that has your data `HTSF_DATA`. Now, sometimes all of the data `HTSF_DATA` is yours, but sometimes it's not. You can see the files in it (to see which one's are yours) with one of the following commands:
 
     ls /proj/magnuslb/HTSF/HTSF_DATA
 
@@ -95,7 +95,7 @@ or
 
     ls ../../../HTSF/HTSF_DATA
 
-You should see a lot of filenames that end in "fastq.gz". Figure out which ones are yours. For the rest of the tutorial, I’ll say one file is called `rna_seq_wt.fastq.gz` and one file is called `rna_seq_ko.fastq.gz.`
+You should see a lot of filenames that end in "fastq.gz". Figure out which ones are yours. For the rest of the tutorial, I'll say one file is called `rna_seq_wt.fastq.gz` and one file is called `rna_seq_ko.fastq.gz.`
 
 
 **STEP 3: Make a link (aka, alias) to your fastq.gz files.** This will keep you from having to type in a path to the file when you run the analysis commands. For the sake of the tutorial, assume you have one RNA-seq file from WT and one RNA-seq file from a knock-out mutant. The following two commands will create links to the original files in your new directory: (Note: these commands assume you are here: `/proj/magnuslb/users/YOUR_ONYEN/EXP_NAME`):
@@ -106,7 +106,7 @@ You should see a lot of filenames that end in "fastq.gz". Figure out which ones 
 
 Note the `.` in those commands. It's important. Everything before it means "make a link to this file", and the `.` says, "make that link right here!".
 
-**STEP 4: Make directories to hold the output of various analyses for each file.** You’re going to run "tophat" and you might run "fastqc", and the output from these programs needs to go into a directory (one per file of reads you want to align).
+**STEP 4: Make directories to hold the output of various analyses for each file.** You're going to run "tophat" and you might run "fastqc", and the output from these programs needs to go into a directory (one per file of reads you want to align).
 Here are the commands to make directories for the WT and KO file samples: (Note these commands assume you are here: `/proj/magnuslb/users/YOUR_ONYEN/EXP_NAME`):
 
     mkdir rna_seq_wt_results
@@ -147,9 +147,9 @@ What do all those commands mean?
 
 `-J fastqc_wt` 	This specifies the name of the "job". The bsub command submits jobs to be done. This job is going to be called `fastqc_wt`, and when we look at our jobs (and whether they are running, or stuck or completed) with the `bjobs` command, it will be listed under `fastqc_wt`.
 
-`-o fastqc_wt_stdout.txt`	This is the "standard output" file for the program we want to run (in this case, `fastqc`). Since we are submitting `fastqc` as a job to a compute node, `fastqc `can’t write messages directly to your terminal. Instead some of those messages will go in this file. This file will rarely be of use, but is here for completeness sake.
+`-o fastqc_wt_stdout.txt`	This is the "standard output" file for the program we want to run (in this case, `fastqc`). Since we are submitting `fastqc` as a job to a compute node, `fastqc `can't write messages directly to your terminal. Instead some of those messages will go in this file. This file will rarely be of use, but is here for completeness sake.
 
-`-e fastqc_wt_stderr.txt`	This is the "standard error" file for the program we want to run (in this case, `fastqc`). Since we are submitting `fastqc` as a job to a compute node, `fastqc` can’t write error messages directly to your terminal. Instead, `fastqc`’s error messages will go in this file. This file can be extremely useful for debugging. If things fail, you can view it’s contents with the following command: `more fastqc_wt_stderr.txt`
+`-e fastqc_wt_stderr.txt`	This is the "standard error" file for the program we want to run (in this case, `fastqc`). Since we are submitting `fastqc` as a job to a compute node, `fastqc` can't write error messages directly to your terminal. Instead, `fastqc`'s error messages will go in this file. This file can be extremely useful for debugging. If things fail, you can view it's contents with the following command: `more fastqc_wt_stderr.txt`
 
 `fastqc`	This is the program we actually want to run on a compute node.
 
@@ -237,17 +237,17 @@ First load the module (you only have to do this once after you login)
 
     module load trimmomatic
 
-Now run trimmomatic (see http://www.usadellab.org/cms/?page=trimmomatic for details). Everything below should go on a single, continuous line - don’t type “return” until the very end:
+Now run trimmomatic (see http://www.usadellab.org/cms/?page=trimmomatic for details). Everything below should go on a single, continuous line - don't type "return" until the very end:
 
     bsub -n 1 -J trim_wt -o trim_wt_stdout.txt -e trim_wt_stderr.txt trimmomatic SE -threads 1 -phred33 -trimlog trimmomatic_log.txt rna_seq_wt.fastq.gz rna_seq_wt_trim.fastq.gz ILLUMINACLIP:/nas02/apps/trimmomatic-0.32/Trimmomatic-0.32/adapters/NexteraPE-PE.fa:2:30:10 SLIDINGWINDOW:4:15 MINLEN:30 LEADING:3 TRAILING:3
 
-This command does a lot… Just like with `fastqc`, `-n 1` tells Kure that we want to use one processor on the compute node, `-J trim_wt` is the name of our job, and `-o` and `-e` specify file names for “standard output” and “standard error” files. Then we tell `bsub` that we want to run `trimmomatic`. The following are it’s options (which are fully explained on it’s website):
+This command does a lot… Just like with `fastqc`, `-n 1` tells Kure that we want to use one processor on the compute node, `-J trim_wt` is the name of our job, and `-o` and `-e` specify file names for "standard output" and "standard error" files. Then we tell `bsub` that we want to run `trimmomatic`. The following are it's options (which are fully explained on it's website):
 
-`SE`	 This tells `trimmomatic` that we are working with “single-end” data (not paired-end, which can be specified with `PE`)
+`SE`	 This tells `trimmomatic` that we are working with "single-end" data (not paired-end, which can be specified with `PE`)
 
 `-threads 1`	 This tells `trimmomatic` that we are only using one processor on the compute node.
 
-`-phred33` 	This tells `trimmomatic` that we are using Phred33 style quality scores (the quality of each sequenced base in each read is included in a Phred33 format. Google this if you’re interested in more details).
+`-phred33` 	This tells `trimmomatic` that we are using Phred33 style quality scores (the quality of each sequenced base in each read is included in a Phred33 format. Google this if you're interested in more details).
 
 `-trimlog trimmomatic_log.txt` 	This tells `trimmomatic` where to save a record of all the trimming it does to your file.
 
@@ -255,7 +255,7 @@ This command does a lot… Just like with `fastqc`, `-n 1` tells Kure that we wa
 
 `rna_seq_wt_trim.fastq.gz` 	This is the name of the new file that trimmomatic will create with the trimmed reads.
 
-`ILLUMINACLIP:/nas02/apps/trimmomatic-0.32/Trimmomatic-0.32/adapters/NexteraPE-PE.fa:2:30:10` 	This tells `trimmomatic` where the illumina adapter sequences are so it can remove them from the reads if they are still there. They are almost always removed, but I’ve included this bit here to be complete.
+`ILLUMINACLIP:/nas02/apps/trimmomatic-0.32/Trimmomatic-0.32/adapters/NexteraPE-PE.fa:2:30:10` 	This tells `trimmomatic` where the illumina adapter sequences are so it can remove them from the reads if they are still there. They are almost always removed, but I've included this bit here to be complete.
 
 `SLIDINGWINDOW:4:15` 	This tells `trimmomatic` to toss out reads that have more with 4 low quality bases in a row.
 
@@ -283,7 +283,7 @@ Load the module:
 
     module load tophat
 
-Now do the alignment (type this without hitting return until the end). This next command works with MM9 (to use MM10, just change the 9 to 10). It was also written assuming you 'trimmed' your file. If you didn’t, change `rna_seq_wt_trim.fastq.gz` to `rna_seq_wt.fastq.gz` :
+Now do the alignment (type this without hitting return until the end). This next command works with MM9 (to use MM10, just change the 9 to 10). It was also written assuming you 'trimmed' your file. If you didn't, change `rna_seq_wt_trim.fastq.gz` to `rna_seq_wt.fastq.gz` :
 
     bsub -n 8 -R "span[hosts=1]" -J tophat_wt -o tophat_wt_stdout.txt -e tophhat_wt_stderr.txt tophat2 --library-type fr-unstranded -o rna_seq_wt_results -p 8 --no-novel-juncs -G /proj/seq/data/MM9_UCSC/Annotation/Genes/genes.gtf /proj/seq/data/MM9_UCSC/Sequence/Bowtie2Index/genome rna_seq_wt_trim.fastq.gz
 
@@ -313,7 +313,7 @@ These are options we are sending to `tophat2`:
 
 `-G /proj/seq/data/MM9_UCSC/Annotation/Genes/genes.gtf`	Tells `tophat2` where the genome annotation file is. In this case, we are specifying the MM9 genome annotation. Kure has annotations for MM10, HG19, etc. This file is used for, among other things, by the `--no-novel-juncs` option. It is also used to build a "transcriptome" from the genome. `Tophat2` will first try to align reads to this transcriptome and then it will align all remaining genes to the genome.
 
-`/proj/seq/data/MM9_UCSC/Sequence/Bowtie2Index/genome`	Tells `tophat2` where the genome is. In this case we’re going to align to the MM9 genome. Kure has annotations for MM10, HG19, etc.
+`/proj/seq/data/MM9_UCSC/Sequence/Bowtie2Index/genome`	Tells `tophat2` where the genome is. In this case we're going to align to the MM9 genome. Kure has annotations for MM10, HG19, etc.
 
 `rna_seq_wt_trim.fastq.gz` This is the name of the file we want to align.
 
@@ -357,16 +357,16 @@ On each line, you should see something that looks like a read, and you should be
 
 **STEP 10: Count the number of reads per gene.**  This will be done with `htseq-count`. (See http://www-huber.embl.de/users/anders/HTSeq/doc/count.html for more details.) The version of `htseq-count` on Kure is old, and does not read "BAM" files directly (the new version does). To use the old version, you first have to translate the BAM file into SAM format. Here's how to do it.. 
 
-First, load in the two modules you need (Note, `htseq-count` is a program written in “python”, and we are going to use a helper program, `samtools`, to get the aligned reads into `htseq-count`).
+First, load in the two modules you need (Note, `htseq-count` is a program written in "python", and we are going to use a helper program, `samtools`, to get the aligned reads into `htseq-count`).
 
     module load python
     module load samtools
 
-Now we are going to use `samtools` and `htseq-count`, connected with a pipe, `|`, to count the reads that map to genes. In unix, the pipe, `|`, takes the output of one program and redirects it to be used as the input of another program. In this case, it takes the output from `samtools view`, which decompresses the aligned reads and it “pipes” it into `htseq-count` to count the reads. Lastly, the output from `htseq-count` is dumped into `rna_seq_wt_results/wt_counts.txt`. This is done using the file redirection character `>`.
+Now we are going to use `samtools` and `htseq-count`, connected with a pipe, `|`, to count the reads that map to genes. In unix, the pipe, `|`, takes the output of one program and redirects it to be used as the input of another program. In this case, it takes the output from `samtools view`, which decompresses the aligned reads and it "pipes" it into `htseq-count` to count the reads. Lastly, the output from `htseq-count` is dumped into `rna_seq_wt_results/wt_counts.txt`. This is done using the file redirection character `>`.
 
     bsub -n 1 -J count -o count_stdout.txt -e count_stderr.txt "samtools view rna_seq_wt_results/accepted_hits.bam | htseq-count --stranded=reverse -m intersection-nonempty - /proj/seq/data/MM9_UCSC/Annotation/Genes/genes.gtf > rna_seq_wt_results/wt_counts.txt"
 
-Hey!!! We’ve put the output of a lot of programs so far into files and we haven’t used the `>` thingy yet! Well, some programs will accept an output file name as an input (so the program knows the name of the file you want to name the output). This is what we have done before. Here, htseq-count doesn’t accept an output filename as input. It wasn’t coded that way (some people code things this way, some folks don’t). So you have to use `>` to do the job.
+Hey!!! We've put the output of a lot of programs so far into files and we haven't used the `>` thingy yet! Well, some programs will accept an output file name as an input (so the program knows the name of the file you want to name the output). This is what we have done before. Here, htseq-count doesn't accept an output filename as input. It wasn't coded that way (some people code things this way, some folks don't). So you have to use `>` to do the job.
 
 For the ko file, just replace `rna_seq_wt` with `rna_seq_ko`
 
@@ -393,15 +393,15 @@ This is what I got when I ran tail on my file:
 
 The first five lines are the last 5 genes that reads were counted for and the last five lines are summary statistics for all the reads that were not counted. As you can see, about 4 million reads did not map to exons (this is `no_feature`), about 150,000 reads mapped to multiple genes (this is `ambigous`), and about 5 million reads mapped to multiple locations (this is `alignment_not_unique`). Out of the the 20 million reads that aligned to the genome, this is pretty good.
 
-**STEP 11: Now make tracks to view on the UCSC genome browser.** We’ll do this with bedtools. (See http://bedtools.readthedocs.org/en/latest/content/bedtools-suite.html for more details).
+**STEP 11: Now make tracks to view on the UCSC genome browser.** We'll do this with bedtools. (See http://bedtools.readthedocs.org/en/latest/content/bedtools-suite.html for more details).
 
     module load bedtools
 
-Now we are going to start an "interactive" session on a compute node. When you do this, you don’t need to run `bsub` explicitly, because everything you do will already be run on a compute node. **Note:** This command will generate a few errors before giving you a new shell prompt. Don't worry about the errors. 
+Now we are going to start an "interactive" session on a compute node. When you do this, you don't need to run `bsub` explicitly, because everything you do will already be run on a compute node. **Note:** This command will generate a few errors before giving you a new shell prompt. Don't worry about the errors. 
 
     bsub -q int -Ip /bin/bash
 
-In the preceding command, `-q int` tells `bsub` to start an "interactive session", and `-Ip /bin/bash` tells `bsub` that you want to use the "bash" shell during that interactive session. "What is a shell?" you ask. A shell is, in some ways, just the prompt that you type all of the commands in. However, shells are also programming languages of their own. That means we can create variables and store information, like filenames or any other value, in them. There are different shells (`bash` is just one of many, there is also `csh`, `tcsh` and `sh`), and each one has it’s own programming syntax. `Bash` is a very commonly used shell and it supports tab-completion, so we’ll stick with it and in the next steps you’ll see how to create variables in bash and how to use them.
+In the preceding command, `-q int` tells `bsub` to start an "interactive session", and `-Ip /bin/bash` tells `bsub` that you want to use the "bash" shell during that interactive session. "What is a shell?" you ask. A shell is, in some ways, just the prompt that you type all of the commands in. However, shells are also programming languages of their own. That means we can create variables and store information, like filenames or any other value, in them. There are different shells (`bash` is just one of many, there is also `csh`, `tcsh` and `sh`), and each one has it's own programming syntax. `Bash` is a very commonly used shell and it supports tab-completion, so we'll stick with it and in the next steps you'll see how to create variables in bash and how to use them.
 
 Now create a variable called `BAMFILE` that holds the name of the file we want to create a UCSC track for. We do this because it will save typing. We can refer to the variable, `BAMFILE`, which is relatively short compared to typing the full filename, which is long.
 
@@ -449,11 +449,11 @@ If that is what you see, than it worked! You can download this file to your comp
 
 **BONUS:** The last way to use `bsub`!!!
 
-So far I’ve demonstrated two of the three ways to use bsub: 1) using it to issue commands all typed out on the prompt, possibly surrounded by quotation marks if you are using a pipe, and 2) using it in interactive mode where you can just type the commands one at a time.
+So far I've demonstrated two of the three ways to use bsub: 1) using it to issue commands all typed out on the prompt, possibly surrounded by quotation marks if you are using a pipe, and 2) using it in interactive mode where you can just type the commands one at a time.
 
-The last way is where you put all of the commands in a file and have `bsub` execute all of the those commands. This is called "submitting a batch" job, because you submit a "batch" of commands all at once. "Batch" jobs are useful if you want to do something that is complicated (i.e. takes several steps), but you don’t want to wait until Kure is done processing before you tell it to do something else. Making a bunch of bedgraphs is one example - it’s complicated, and you might have 10 different files you want to do it for. Wouldn’t it be great if you could submit all 10 jobs at once, and not have to wait for one to complete before submitting the next one?
+The last way is where you put all of the commands in a file and have `bsub` execute all of the those commands. This is called "submitting a batch" job, because you submit a "batch" of commands all at once. "Batch" jobs are useful if you want to do something that is complicated (i.e. takes several steps), but you don't want to wait until Kure is done processing before you tell it to do something else. Making a bunch of bedgraphs is one example - it's complicated, and you might have 10 different files you want to do it for. Wouldn't it be great if you could submit all 10 jobs at once, and not have to wait for one to complete before submitting the next one?
 
-Here’s how to do this:
+Here's how to do this:
 
 First, you have to make a file with the commands you want to run. There are lots of ways to make this file. Kure has built in text editors (`vi`, `emacs`, `pico`), or you can use an SCP application (like `Cyberduck` on Macs) and edit text files on Kure using `Text Wrangler`. Regardless, this what you put in the file:
 
@@ -473,9 +473,9 @@ First, you have to make a file with the commands you want to run. There are lots
     
     bedtools genomecov -split -ibam $BAMFILE -bg -scale $NORM -g /proj/seq/data/MM9_UCSC/Annotation/Genes/ChromInfo.txt -trackline -trackopts $TRACK_OPT > $OUTFILE
 
-You’ll notice some similarities and differences in this file from when we ran these commands interactively. For the most part, things are the same, except now we have `BAMFILE=$1`, which means "make a variable called `BAMFILE` and set it to the first thing I see." We’ve also added `TRACK_NAME=$2`, which means "make a variable called `TRACK_NAME` and set it to the second thing I see." Lastly, we’ve added `OUTFILE=$3`, which means "make a variable called `OUTFILE` and set it to the third thing I see." Later in the commands we use these variables instead of typing out "my track" and "wt.bedgraph".
+You'll notice some similarities and differences in this file from when we ran these commands interactively. For the most part, things are the same, except now we have `BAMFILE=$1`, which means "make a variable called `BAMFILE` and set it to the first thing I see." We've also added `TRACK_NAME=$2`, which means "make a variable called `TRACK_NAME` and set it to the second thing I see." Lastly, we've added `OUTFILE=$3`, which means "make a variable called `OUTFILE` and set it to the third thing I see." Later in the commands we use these variables instead of typing out "my track" and "wt.bedgraph".
 
-What does "set it to the first (second or third) thing I see" mean? Hang in there, you’ll understand in just a second...
+What does "set it to the first (second or third) thing I see" mean? Hang in there, you'll understand in just a second...
 
 Now, assume we saved that file as "makeBedgraph.sh". To run it, use this command:
 
@@ -485,13 +485,13 @@ The first part, `bsub -n 1 -J bg_wt -o bg_wt_stdout.txt -e bg_wt_stderr.txt`, is
 
 `sh`
 
-This tells `bsub` to “execute” everything that follows using the `sh` shell. (Note, you could probably use bash here, but writing your code so that `sh` can run it ensures maximum portability. Every unix machine on the planet can run `sh` scripts. Not all of them, however, can run `bash` scripts.) The first thing `sh` will do is put:
+This tells `bsub` to "execute" everything that follows using the `sh` shell. (Note, you could probably use bash here, but writing your code so that `sh` can run it ensures maximum portability. Every unix machine on the planet can run `sh` scripts. Not all of them, however, can run `bash` scripts.) The first thing `sh` will do is put:
 
 `rna_seq_wt_results/accepted_hits.bam my_track wt.bedgraph`
 
 into `$1`, `$2`, and `$3`. That is, it will put `rna_seq_wt_results/accepted_hits.bam` into `$1`, it will put `my_track` into `$2` and, lastly, it will put `wt.bedgraph` into `$3`. After it does that, it will run `makeBedgraph.sh`. At this point the three variables, `$1`, `$2`, and `$3` in `makeBedgraph.sh` have been defined (and are no longer just "put the first thing I see in `$1`") and, if all goes well, you will end up with a new file called `wt.bedgraph`.
 
-Now, here’s something cool. What if you had 3 files of WT data? You could enter the commands really quickly (if you use the "up-arrow" key) like this:
+Now, here's something cool. What if you had 3 files of WT data? You could enter the commands really quickly (if you use the "up-arrow" key) like this:
 
     bsub -n 1 -J bg_wt1 -o bg_wt1_stdout.txt -e bg_wt1_stderr.txt "sh makeBedgraph.sh rna_seq_wt1_results/accepted_hits.bam wt1_track wt1.bedgraph"
     
