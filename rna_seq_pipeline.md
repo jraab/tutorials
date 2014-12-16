@@ -16,7 +16,7 @@
  **Logging in and Creating a Directory For Yourself in Our Lab’s Space:**
 When you log into Kure, it puts you in your home directory (in the figure below, I’ve indicated the location of your home directory relative to other important directories):
 
-#ADD THE FIGURE HERE!
+![image of directory structure](MagnusonKureDirectories.png)
 
 Because my “onyen” username is “starmer”, my home directory is `/nas02/home/s/t/starmer`
 
